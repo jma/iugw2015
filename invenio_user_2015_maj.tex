@@ -107,7 +107,7 @@
 
 \frame{\frametitle{Introduction II} 
 \begin{itemize}
-	\item a statistical module exists in Invenio
+	\item a statistics module exists in Invenio
 	\begin{itemize}
     	\item unfortunately it includes \alert{bots accesses} (widely more frequent than humans)
     	\item it does not give enough detailed information
@@ -115,8 +115,8 @@
 	\item awstats
 	\begin{itemize}
     	\item too general
-    	\item bad robot detection
-    	\item bad user interface (lacks of multiple filters)
+    	\item poor robot detection
+    	\item inadequate user interface (lacks of multiple filters)
 	\end{itemize} 
 	\item google analytics
 	\begin{itemize}
@@ -209,7 +209,7 @@
 
 \frame{\frametitle{Frontend}
 	\begin{itemize}
-		\item use AngularJS with bootstrap and highcharts
+		\item use AngularJS with bootstrap and Highcharts
 		\item ajax based Elasticsearch queries through a JSON-RPC Flask server
 		\item has been \alert{tested} by several institutions and the feedback is widely positive
 	\end{itemize}
@@ -228,11 +228,11 @@
 
 \frame{\frametitle{White List}
 	\begin{itemize}
-		\item RERO Institutions IPS extracted from Invenio (web access)
+		\item RERO Institutions IPs extracted from Invenio (web access)
 	\end{itemize}
 }
 
-\frame{\frametitle{Black List IPS Rules}
+\frame{\frametitle{Black List IPs Rules}
 Used to remove undeclared bot accesses.
 	\begin{itemize}
 		\item more than 1 access to \alert{"/robots.txt"}
@@ -266,7 +266,7 @@ Let's see how it looks like:
 		\item Google is our friend (of course), Bing is not (sorry)!
 		\item \alert{bug} detected for Scholar since our migration (will be fully re-indexed in late-January)
 		\item save time to produce statistics (previously needed manual work)
-		\item Multivio(home-make pdf reader) is used but not always
+		\item Multivio (home-made PDF reader) is used but not always
 		\item most of accesses are \alert{files}
 		\item Invenio search interface \alert{is still used} (not only Google)
 	\end{itemize}
@@ -276,7 +276,7 @@ Let's see how it looks like:
 \section{And Next?}
 \frame{\frametitle{And Next?}
 	\begin{itemize}
-		\item display statistics in the Invenio \alert{detailed view}
+		\item display statistics in the Invenio \alert{detailed record view}
 		\item \alert{CSV} export for reports usage
 	\end{itemize}
 }
@@ -288,7 +288,7 @@ Let's see how it looks like:
 		\item Elasticsearch \url{https://www.elastic.co/fr/}
 		\item Flask Python Web Framework \url{http://flask.pocoo.org/}
 		\item JSON-RPC Flask package \url{https://github.com/cenobites/flask-jsonrpc}
-		\item Charts Javascript Library \url{http://www.highcharts.com/}
+		\item Highcharts Javascript Library \url{http://www.highcharts.com/}
 		\item HTML/CSS Framework \url{http://getbootstrap.com/}
 		\item IP geo localisation database \url{http://dev.maxmind.com/}
 		\item User Agent Database \url{https://github.com/chetan/UASparser}
