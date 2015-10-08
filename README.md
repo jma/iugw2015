@@ -2,7 +2,17 @@
 
 RERO presentation and workshop notes for <https://indico.cern.ch/event/441770/>
 
-## The New RERO Statistics Services: Abstract
+## The New RERO Statistics Services
+
+### Installation
+
+As the `helvetica` fonts are used you need to install all package matching `URW "` using `Tex Live Utility`.
+
+Create pdf by running:
+
+	pdflatex invenio_user_2015_maj
+
+### Abstract
 
 More and more RERO professionals are asking for statistics on the use of the
 RERO DOC server. They want to know, for a certain period, what are the most
