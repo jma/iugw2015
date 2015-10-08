@@ -1,0 +1,299 @@
+\documentclass[t]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+
+\definecolor{darkblue}{RGB}{1, 8, 100}
+\definecolor{blue}{RGB}{47, 82, 150}
+\definecolor{red}{RGB}{151,4,12}
+\definecolor{lightblue}{RGB}{68,127,211}
+\definecolor{orange}{RGB}{244,130,41}
+
+\usetheme{default}
+\setbeamercolor{title}{fg=blue}
+\setbeamercolor{subtitle}{fg=red}
+\setbeamercolor{author}{fg=lightblue}
+\setbeamercolor{date}{fg=lightblue}
+\setbeamercolor{code}{fg=orange}
+
+\setbeamercolor{normal text}{fg=darkblue}
+\setbeamercolor{alerted text}{fg=red}
+\setbeamercolor{example text}{fg=orange}
+\setbeamercolor{structure}{fg=lightblue}
+\setbeamercolor{institute in head/foot}{fg=lightblue}
+\setbeamercolor{date in head/foot}{fg=lightblue}
+\setbeamercolor{framenumber in head/foot}{fg=lightblue}
+
+\setbeamerfont{institute in head/foot}{size=\fontsize{4}{12}}
+\setbeamerfont{framenumber in head/foot}{size=\fontsize{4}{12}}
+\setbeamerfont{date in head/foot}{size=\fontsize{4}{12}}
+\newcommand*{\info}{\textcolor{orange}}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate
+    {frametitle}
+    {
+      \begin{flushleft}
+        \insertframetitle
+      \end{flushleft}
+    }
+%\setbeamertemplate{footline}{\insertinstitute \hfill \insertframenumber \hfill \insertdate}
+
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,left]{institute in head/foot}%
+    \hspace*{1ex}\usebeamerfont{institute in head/foot}\insertinstitute
+  \end{beamercolorbox}%
+
+  \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{framenumber in head/foot}%
+    \usebeamerfont{framenumber in head/foot} \insertframenumber{}
+  \end{beamercolorbox}%
+
+  \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertdate\hspace*{1ex}
+  \end{beamercolorbox}
+  }%
+  \vskip0pt%
+  \vspace{0.3cm}
+}
+
+
+\setbeamertemplate{title page}{%
+	\vspace{0.5cm}
+    \begin{flushright}
+    	\includegraphics[height=1.6cm,keepaspectratio]{logos/rero_logo_text_rgb}%
+    \end{flushright}
+    \vskip0pt plus 1filll
+    \begin{flushleft}
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}\\
+	\vspace{0.5em}
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle} \\
+	\vspace{1.5em}
+      {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor} \\
+	\vspace{0.5em}
+      {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate}
+    \end{flushleft}
+    \vskip0pt plus 1filll
+}
+
+\begin{document}
+\title{The New RERO Statistics Services} 
+\subtitle{Invenio User Group Workshop 2015 } 
+\author{Johnny Mariéthoz} 
+\date{2015} 
+\logo{%
+  \makebox[0.98\paperwidth]{%
+    \includegraphics[height=0.3cm,keepaspectratio]{logos/rero_logo_rgb}%
+    \hfill%
+  }%
+}
+\institute {réseau des biliothèques suisse occidentale}
+
+\frame[plain]{\titlepage} 
+
+%\frame{\frametitle{Table of contents}\tableofcontents} 
+
+
+\section{Introduction} 
+\frame{\frametitle{Introduction I} 
+\begin{itemize}
+	\item institutions need statistics for reports and analysis
+	\item as instance manager we need statistics to understand user behavior
+\end{itemize}
+}
+
+\frame{\frametitle{Introduction II} 
+\begin{itemize}
+	\item a statistical module exists in Invenio
+	\begin{itemize}
+    	\item unfortunately it includes \alert{bots accesses} (widely more frequent than humans)
+    	\item it does not give enough detailed information
+	\end{itemize} 
+	\item awstats
+	\begin{itemize}
+    	\item too general
+    	\item bad robot detection
+    	\item bad user interface (lacks of multiple filters)
+	\end{itemize} 
+	\item google analytics
+	\begin{itemize}
+    	\item difficult to add instance specific information such as collections
+    	\item data protection (privacy)
+	\end{itemize} 
+\end{itemize}
+\alert{we therefore decided to create our own module}
+}
+
+\section{Workflow} 
+\frame{\frametitle{Workflow}
+\begin{enumerate}
+\item parse apache log to retrieve access information
+	\begin{itemize}
+    	\item IP address
+    	\item datetime
+    	\item URL
+    	\item http status
+    	\item referrer
+	\end{itemize} 
+\item filters accesses to keep only useful accesses (to avoid \alert{bots} trafic)
+\item \alert{on the fly} Elasticsearch indexing
+\item users can access the statistics using a specific web page
+	\begin{itemize}
+    	\item angular based interface using ajax request to query the ES index
+	\end{itemize} 
+\end{enumerate} 
+}
+
+\section{Technology} 
+\frame{\frametitle{Technology}
+\begin{itemize}
+	\item indexing
+	\begin{itemize}
+	    \item apache logger that pipe into a home-made indexing script
+	    \item on the fly indexing using Invenio API to \alert{enrich} data
+	    \item \alert{black IPs} creation
+	    \item specific Elasticsearch index
+	    \item use UASparser: User Agent String parser
+	    \item GeoLiteCity: geo-localisation IP based database
+	\end{itemize} 
+	\item frontend
+	\begin{itemize}
+	    \item based on \alert{AngularJS}
+	    \item use ajax request to a Flask-API
+	\end{itemize} 
+\end{itemize} 
+}
+
+\section{Workflow Implementation}
+
+\frame{\frametitle{Apache Log Parsing}
+\begin{itemize}
+	\item on the fly indexing using a script \info{CustomLog "| log\_indexing.py"}
+	\item regular expression to parse logs
+	\item remove non pertinent data (images, css, etc.)
+	\item remove \alert{bots accesses}
+\end{itemize}
+
+}
+
+\frame{\frametitle{Enrich the Data}
+\begin{itemize}
+	\item add informations using Invenio API, UASparser and GeoLiteCity
+	\begin{itemize}
+    	\item with a {\em recid} and Invenio API we add:
+    	\begin{itemize}
+        	\item insitution
+        	\item document type
+        	\item UDC domains
+        	\item patrimonial collection
+       	\end{itemize}
+    \end{itemize}
+   	\item based on the URL we add:
+   	\begin{itemize}
+       	\item {\em recid}
+       	\item file name
+       	\item request type: simple search, advanced search, file uploads, etc.
+       	\item language of the interface
+       	\item referrer
+    \end{itemize}
+  	\item using GeoLiteCity and the IP address we add
+    \begin{itemize}
+     	\item country
+   	\end{itemize}
+\end{itemize}
+
+}
+
+\frame{\frametitle{Frontend}
+	\begin{itemize}
+		\item use AngularJS with bootstrap and highcharts
+		\item ajax based Elasticsearch queries through a JSON-RPC Flask server
+		\item has been \alert{tested} by several institutions and the feedback is widely positive
+	\end{itemize}
+}
+
+\section{Bots Detection}
+
+\frame{\frametitle{Considered as Human Access}
+	\begin{itemize}
+		\item corresponds to a predefined list of valid URLs (search, record, file, etc.)
+		\item referrer does not match Bots regular expression
+		\item IP in white list tips
+		\item IP not in black list
+	\end{itemize}
+}
+
+\frame{\frametitle{White List}
+	\begin{itemize}
+		\item RERO Institutions IPS extracted from Invenio (web access)
+	\end{itemize}
+}
+
+\frame{\frametitle{Black List IPS Rules}
+Used to remove undeclared bot accesses.
+	\begin{itemize}
+		\item more than 1 access to \alert{"/robots.txt"}
+		\item more than 20 accesses to \alert{MarcXml} (\*/export/xm)
+		\item more than 20 accesses to \alert{MODS} (\*/export/xo)
+		\item more than 20 accesses to \alert{subformat} (\*subformat*)
+		\item more than 20 accesses to file \alert{version} (?version=1)
+		\item more than accesses to records or files with an unlikely \alert{"referrer"} (direct access from the main page):
+		\begin{itemize}
+			\item http://doc.rero.ch
+			\item https://doc.rero.ch
+			\item http://doc.reroc.ch/
+			\item https://doc.reroc.ch/
+		\end{itemize}
+	\end{itemize}
+}
+
+\section{Demo}
+\frame{\frametitle{Demo}
+Let's see how it looks like:
+	\begin{itemize}
+		\item \url{http://doc.rero.ch/stats/\#?ln=en}
+		\item \url{http://doc.rero.ch/stats/\#?ln=en&cc=PRESS}
+	\end{itemize}
+}
+
+\section{Learnt from the Data}
+\frame{\frametitle{Learnt from the Data}
+	\begin{itemize}
+		\item fun to play and learn using the new interface
+		\item Google is our friend (of course), Bing is not (sorry)!
+		\item \alert{bug} detected for Scholar since our migration (will be fully re-indexed in late-January)
+		\item save time to produce statistics (previously needed manual work)
+		\item Multivio(home-make pdf reader) is used but not always
+		\item most of accesses are \alert{files}
+		\item Invenio search interface \alert{is still used} (not only Google)
+	\end{itemize}
+}
+
+
+\section{And Next?}
+\frame{\frametitle{And Next?}
+	\begin{itemize}
+		\item display statistics in the Invenio \alert{detailed view}
+		\item \alert{CSV} export for reports usage
+	\end{itemize}
+}
+
+
+\section{References}
+\frame{\frametitle{References}
+	\begin{itemize}
+		\item Elasticsearch \url{https://www.elastic.co/fr/}
+		\item Flask Python Web Framework \url{http://flask.pocoo.org/}
+		\item JSON-RPC Flask package \url{https://github.com/cenobites/flask-jsonrpc}
+		\item Charts Javascript Library \url{http://www.highcharts.com/}
+		\item HTML/CSS Framework \url{http://getbootstrap.com/}
+		\item IP geo localisation database \url{http://dev.maxmind.com/}
+		\item User Agent Database \url{https://github.com/chetan/UASparser}
+		\item Invenio Software \url{http://invenio-software.org/}
+	\end{itemize}
+}
+
+\end{document}
