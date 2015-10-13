@@ -4,7 +4,7 @@ A first study at RERO
 
 ## A new approach
 
-- MarcXML is not __centric__ anymore => becomes an import/export format
+- MarcXML is not __central__ anymore => becomes an import/export format
 - master format should be __human__ readable and easy to use
 - master format should be automagically validated => __JSON schema__
 - an editor should be created from the cataloging rules => based on schema
@@ -18,16 +18,16 @@ A first study at RERO
 
 ### New Decorator: to solve ISBN
 
-- problem: 2 ISBN formats: isbn10 and isbn13 with two corresponding ontologies (bibo:isbn10, bibo:isbn13)
+- problem: 2 ISBN formats: isbn10 and isbn13 with __two corresponding ontologies__ (bibo:isbn10, bibo:isbn13)
 - pull request with a new decorator `@utils.ignore_value` (thanks to Jiri)
 	- we do not know in advance which ISBN we have (same Marc field)
 	- depends on a regular expression
-	- return `None` value removes the corresponding property => avoid `{"isbn10": null}`
+	- returning `None` value removes the corresponding property => avoid `{"isbn10": null}`
 
 ## JSON Editor
 
-- JS code (<https://github.com/jdorn/json-editor>) + JSON schema
-- need specific properties: `propertyOrder`, `watch`, etc.
+- JS code (<https://github.com/jdorn/json-editor>) + __JSON schema__
+- need __specific__ properties: `propertyOrder`, `watch`, etc.
 - demo
 
 ## JSON-LD = JSON + @context
@@ -39,12 +39,12 @@ A good introduction: <http://www.dataversity.net/smartdata-webinar-slides-json-l
 
 ### LD Part
 
-- subject–predicate–object
-- subject entity is identified by a unique URI
-- predicate is specified by a unique URI defining a property within an ontology
-- object entity is identified by a unique URI or a literal (string)
+- __subject–predicate–object__
+- __subject__ entity is identified by a unique URI
+- __predicate__ is specified by a unique URI defining a property within an ontology
+- __object__ entity is identified by a unique URI or a literal (text)
 - JSON-LD makes our data __understandable__ for the rest of the world
-- RERO LD data model	 by Nicolas Prongué
+- RERO LD data model by __Nicolas Prongué__
 
 ### Used Ontologies
 
@@ -125,9 +125,11 @@ A good introduction: <http://www.dataversity.net/smartdata-webinar-slides-json-l
  
 ## Invenio > 2.2 Preparation
 
-- write mappings rules for all document types
-- write tests for all rules using `pytest` for JSON validation
-- check MarcXML -> JSON -> MarcXML for all RERO data
-- configure the editor with autocompletion (ORCID, UDC, etc.)
-- liked data validation by hand (local experts)
-- check Elasticsearch compatibility (mapping + anaysis)
+- write mappings rules for __all__ document types
+- write __tests__ for all rules using `pytest` for JSON validation
+- check MarcXML -> JSON -> MarcXML for __all__ RERO records
+- configure the editor with __autocompletion__ (ORCID, UDC, etc.)
+- liked data __validation__ by hand
+- check __Elasticsearch__ compatibility (mapping + anaysis)
+- write an other `@context` for __schema.org__
+- do all the stuff in __parallel__ to have a nice data model
